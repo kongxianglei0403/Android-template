@@ -1,4 +1,4 @@
-package org.jetbrains.plugins.template
+package com.github.kongxianglei0403.androidtemplate
 
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.NonNls

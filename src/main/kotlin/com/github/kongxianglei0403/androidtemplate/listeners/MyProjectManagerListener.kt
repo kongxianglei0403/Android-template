@@ -1,9 +1,9 @@
-package org.jetbrains.plugins.template.listeners
+package com.github.kongxianglei0403.androidtemplate.listeners
 
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ProjectManagerListener
-import org.jetbrains.plugins.template.services.MyProjectService
+import com.github.kongxianglei0403.androidtemplate.services.MyProjectService
 
 internal class MyProjectManagerListener : ProjectManagerListener {
 
