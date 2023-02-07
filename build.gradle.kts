@@ -24,7 +24,10 @@ version = properties("pluginVersion")
 // Configure project's dependencies
 repositories {
     mavenCentral()
+    jcenter()
+    google()
 }
+
 
 // Set the JVM language level used to build the project. Use Java 11 for 2020.3+, and Java 17 for 2022.2+.
 kotlin {
@@ -34,9 +37,10 @@ kotlin {
 // Configure Gradle IntelliJ Plugin - read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
     pluginName.set(properties("pluginName"))
-    version.set(properties("platformVersion"))
-    type.set(properties("platformType"))
-
+//    version.set(properties("platformVersion"))
+//    type.set(properties("platformType"))
+    localPath.set(properties("androidstudioPath"))
+    downloadSources.set(properties("platformDownloadSources").toBoolean())
     // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file.
     plugins.set(properties("platformPlugins").split(',').map(String::trim).filter(String::isNotEmpty))
 }
@@ -61,6 +65,21 @@ kover.xmlReport {
 }
 
 tasks {
+
+//    instrumentCode {
+//        setCompilerVersion("212.5457.46")
+//    }
+
+    withType<JavaCompile> {
+        sourceCompatibility = "11"
+        targetCompatibility = "11"
+    }
+    listOf("compileKotlin", "compileTestKotlin").forEach {
+        getByName<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>(it) {
+            kotlinOptions.jvmTarget = "11"
+        }
+    }
+
     wrapper {
         gradleVersion = properties("gradleVersion")
     }
@@ -97,12 +116,12 @@ tasks {
 
     // Configure UI tests plugin
     // Read more: https://github.com/JetBrains/intellij-ui-test-robot
-    runIdeForUiTests {
-        systemProperty("robot-server.port", "8082")
-        systemProperty("ide.mac.message.dialogs.as.sheets", "false")
-        systemProperty("jb.privacy.policy.text", "<!--999.999-->")
-        systemProperty("jb.consents.confirmation.enabled", "false")
-    }
+//    runIdeForUiTests {
+//        systemProperty("robot-server.port", "8082")
+//        systemProperty("ide.mac.message.dialogs.as.sheets", "false")
+//        systemProperty("jb.privacy.policy.text", "<!--999.999-->")
+//        systemProperty("jb.consents.confirmation.enabled", "false")
+//    }
 
     signPlugin {
         certificateChain.set(System.getenv("CERTIFICATE_CHAIN"))

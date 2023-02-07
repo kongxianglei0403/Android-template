@@ -1,1 +1,1 @@
-rootProject.name = "Android-template"
+rootProject.name = "mvp-template"
